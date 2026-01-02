@@ -1,6 +1,6 @@
 # settings.py
 
-FPS=2
+FPS=60
 
 # Game Size
 W_CELLS=4

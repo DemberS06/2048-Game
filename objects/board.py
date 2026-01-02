@@ -68,7 +68,7 @@ class Board:
                     self.board[i][x]=0
                     break
 
-        self.score+=2**score
+        return score
 
     def move_l(self):
         score = 0
@@ -97,7 +97,7 @@ class Board:
                     self.board[i][x]=0
                     break
 
-        self.score+=2**score
+        return score
 
     def move_d(self):
         score = 0
@@ -126,7 +126,7 @@ class Board:
                     self.board[x][i]=0
                     break
 
-        self.score+=2**score
+        return score
 
     def move_u(self):
         score = 0
@@ -155,6 +155,6 @@ class Board:
                     self.board[x][i]=0
                     break
 
-        self.score+=2**score
+        return score
 
     
