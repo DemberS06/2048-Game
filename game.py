@@ -4,9 +4,7 @@ import pygame
 
 from objects.board import Board
 from objects.match import Match
-from settings import (
-    BORDER_LN, CELL_LN, EDGE_LN, DATA_LN
-)
+from settings import WHITE
 
 class Game:
     def __init__(self, screen):
@@ -19,6 +17,10 @@ class Game:
 
     def handle_input(self):
         keys = pygame.key.get_pressed()
+
+        if keys[pygame.K_SPACE]:
+            return False
+
         dir = [0, 0, 0, 0]
         if keys[pygame.K_w] or keys[pygame.K_UP]:    dir[0]=1
         if keys[pygame.K_a] or keys[pygame.K_LEFT]:  dir[1]=1
@@ -40,13 +42,7 @@ class Game:
         
 
     def draw(self):
-        self.screen.fill((0,0,0))
-        for i in range(4):
-            for j in range(4):
-                X=BORDER_LN + j*(CELL_LN+EDGE_LN)
-                Y=BORDER_LN + DATA_LN + i*(CELL_LN+EDGE_LN)
-                font=pygame.font.SysFont("Arial", 48)
-                NUM=font.render(str(2**self.match.board.board[i][j]), True, (255,255,255))
-                if self.match.board.board[i][j]!=0:
-                    self.screen.blit(NUM, (X, Y))
+        self.screen.fill(WHITE)
+        self.match.draw(self.screen)
+        
         

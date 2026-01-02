@@ -20,8 +20,7 @@ def play():
             if event.type == pygame.QUIT:
                 running = False
 
-        game.handle_input()
-        #running = game.update(BESTL, BESTR)
+        running = running and game.handle_input()
         game.draw()
 
         pygame.display.flip()

@@ -1,6 +1,11 @@
 import pygame
 from objects.board import Board
 
+from settings import (
+    BORDER_LN, CELL_LN, EDGE_LN, DATA_LN,
+    BLACK, WHITE, R_MN, R_MX, L_R, G_MN, G_MX, L_G, B_MN, B_MX, L_B, UL
+)
+
 class Match:
     def __init__(self):
         self.board=Board()
@@ -34,7 +39,32 @@ class Match:
         self.board.equal(nxt)
         return self.board.push()
 
-    def draw(self, screen, i, j):
+    def draw(self, screen):
+        font=pygame.font.SysFont("Arial", 48)
+        txt=font.render("SCORE: "+str(self.score)+"  MOVES: "+str(self.moves), True, BLACK)
+        screen.blit(txt, (0,0))
+
+        for i in range(self.board.H):
+            for j in range(self.board.W):
+                X=BORDER_LN + j*(CELL_LN+EDGE_LN)
+                Y=BORDER_LN + DATA_LN + i*(CELL_LN+EDGE_LN)
+
+                cur=self.board.board[i][j]
+                sz=self.board.H*self.board.W+2
+                cell_color = (R_MN+cur*(R_MX-R_MN)/sz, G_MN+cur*(G_MX-G_MN)/sz, B_MN+cur*(B_MX-B_MN)/sz)
+                
+                cell = pygame.Rect(X, Y, CELL_LN, CELL_LN)
+                pygame.draw.rect(screen, cell_color, cell)
+                
+                light = L_R*cell_color[0] + L_G*cell_color[1] + L_B*cell_color[2] 
+                text_color = BLACK
+                if light < UL: text_color = WHITE
+
+                txt=font.render(str(2**self.board.board[i][j]), True, text_color)
+                rect_txt=txt.get_rect()
+                rect_txt.center=(X+CELL_LN/2, Y+CELL_LN/2)
+                if self.board.board[i][j]!=0:
+                    screen.blit(txt, rect_txt)
         return
 
     
