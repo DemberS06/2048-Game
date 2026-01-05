@@ -4,7 +4,9 @@ import pygame
 
 from objects.board import Board
 from objects.match import Match
-from settings import WHITE
+from settings import BLACK, WHITE, IA_PATH
+
+from IA.IA import IA_DQN
 
 class Game:
     def __init__(self, screen):
@@ -39,10 +41,19 @@ class Game:
             
         self.dir=dir
         return True
-        
 
-    def draw(self):
+    def IA_move(self, IA: IA_DQN):
+        dir=IA.query(self.match.board)
+        ok = self.match.IA_move(dir, IA)
+        IA.train_step()
+        IA.save_to_path(IA_PATH)
+        return ok
+
+    def draw(self, ok = False):
         self.screen.fill(WHITE)
         self.match.draw(self.screen)
+        if ok:
+            return
+
         
         

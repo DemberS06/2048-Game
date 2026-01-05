@@ -2,7 +2,9 @@
 import pygame
 
 from game import Game
-from settings import WIDTH, HEIGHT, FPS, IA_TRAINING
+from settings import WIDTH, HEIGHT, FPS, IA_TRAINING, IA_PATH
+
+from IA.IA import IA_DQN
 
 def play():
     pygame.init()
@@ -28,6 +30,9 @@ def play():
     pygame.quit()
 
 def training():
+    IA = IA_DQN()
+    IA.load_from_path(IA_PATH)
+
     for i in range(IA_TRAINING):
         pygame.init()
         pygame.font.init()
@@ -44,16 +49,16 @@ def training():
                 if event.type == pygame.QUIT:
                     running = False
 
-            running = running and game.handle_input()
-            game.draw()
+            running = running and game.IA_move(IA)
+            game.draw(True)
 
             pygame.display.flip()
             clock.tick(FPS)
         pygame.quit()
 
 def main():
-    #training()
-    play()
+    training()
+    #play()
     
     print("2048 ended succefull")
     
