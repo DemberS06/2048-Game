@@ -46,7 +46,7 @@ class Game:
         dir=IA.query(self.match.board)
         ok = self.match.IA_move(dir, IA)
         IA.train_step()
-        IA.save_to_path(IA_PATH)
+        #IA.save_to_path(IA_PATH)
         return ok
 
     def draw(self, i = -1, moves=-1):
@@ -56,6 +56,7 @@ class Game:
         font=pygame.font.SysFont("Arial", 48)
         txt=font.render("GAME: "+str(i+1)+"  MOVES: "+str(moves), True, BLACK)
         self.screen.blit(txt, (0,HEIGHT-BORDER_LN/2))
+        print("GAME: "+str(i+1)+"  MOVES: "+str(moves))
 
         
         

@@ -5,7 +5,7 @@ from IA.buffer import Buffer
 from settings import (
     BORDER_LN, CELL_LN, EDGE_LN, DATA_LN,
     BLACK, WHITE, R_MN, R_MX, L_R, G_MN, G_MX, L_G, B_MN, B_MX, L_B, UL,
-    INVALID_PENALTY, GAME_OVER_PENALTY, WIN_REWARD, TIME_PENALTY, MERGE_SCALE, CLIP_MIN, CLIP_MAX, BONUS
+    INVALID_PENALTY, GAME_OVER_PENALTY, WIN_REWARD, TIME_PENALTY, MERGE_SCALE, CLIP_MIN, CLIP_MAX, BONUS, STRUCT
 )
 
 class Match:
@@ -45,7 +45,7 @@ class Match:
         nxt = Board()
         nxt.equal(self.board)
 
-        print(d)
+        #print(d)
 
         score = 0
         buffer = Buffer()
@@ -76,7 +76,6 @@ class Match:
         nxt.push()
 
         self.board.equal(nxt)
-        self.board.push()
 
         ok = nxt.push()
 
@@ -88,10 +87,14 @@ class Match:
 
         if ok:
             cnt=0
+            mx=0
             for v in self.board.board:
                 for u in v:
                     cnt+=(u==0)
+                    if u>mx: mx=u
             buffer.R+=TIME_PENALTY+BONUS*cnt
+            if self.board.board[0][0]==mx or self.board.board[-1][0]==mx or self.board.board[0][-1]==mx or self.board.board[-1][-1]==mx: 
+                buffer.R+=STRUCT
             buffer.done=0
         else:
             buffer.R=GAME_OVER_PENALTY

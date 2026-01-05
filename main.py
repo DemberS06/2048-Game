@@ -54,8 +54,8 @@ def training():
 
             pygame.display.flip()
             clock.tick(FPS)
+        IA.save_to_path(IA_PATH)
     pygame.quit()
-    IA.save_to_path(IA_PATH)
 
 def main():
     training()

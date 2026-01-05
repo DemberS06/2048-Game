@@ -6,7 +6,6 @@ from settings import W_CELLS, H_CELLS
 class Board:
     def __init__(self):
         self.W, self.H=W_CELLS, H_CELLS
-        self.score=0
         self.board=self.create_board()
         self.push()
         self.push()
@@ -29,7 +28,6 @@ class Board:
         return True
     
     def equal(self, nxt):
-        self.score=nxt.score
         for i in range(self.H):
             for j in range(self.W):
                 self.board[i][j]=nxt.board[i][j]
