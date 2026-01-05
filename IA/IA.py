@@ -86,6 +86,7 @@ class IA_DQN:
         if len(self.Buff) < BATCH_SIZE:
             return None
         batch = random.sample(self.Buff, BATCH_SIZE)
+        batch.append(self.Buff[-1])
         states = [self.board_to_input(x.A) for x in batch]
         next_states = [self.board_to_input(x.B) for x in batch]
         actions = [int(x.mov) for x in batch]

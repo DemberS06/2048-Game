@@ -4,7 +4,7 @@ import pygame
 
 from objects.board import Board
 from objects.match import Match
-from settings import BLACK, WHITE, IA_PATH
+from settings import BLACK, WHITE, IA_PATH, BORDER_LN, HEIGHT
 
 from IA.IA import IA_DQN
 
@@ -49,11 +49,13 @@ class Game:
         IA.save_to_path(IA_PATH)
         return ok
 
-    def draw(self, ok = False):
+    def draw(self, i = -1, moves=-1):
         self.screen.fill(WHITE)
         self.match.draw(self.screen)
-        if ok:
-            return
+        if i==-1:return
+        font=pygame.font.SysFont("Arial", 48)
+        txt=font.render("GAME: "+str(i+1)+"  MOVES: "+str(moves), True, BLACK)
+        self.screen.blit(txt, (0,HEIGHT-BORDER_LN/2))
 
         
         

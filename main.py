@@ -33,13 +33,13 @@ def training():
     IA = IA_DQN()
     IA.load_from_path(IA_PATH)
 
+    pygame.init()
+    pygame.font.init()
+    pygame.mixer.init()
+    screen = pygame.display.set_mode((WIDTH, HEIGHT))
+    pygame.display.set_caption("2048")
+    clock = pygame.time.Clock()
     for i in range(IA_TRAINING):
-        pygame.init()
-        pygame.font.init()
-        pygame.mixer.init()
-        screen = pygame.display.set_mode((WIDTH, HEIGHT))
-        pygame.display.set_caption("2048")
-        clock = pygame.time.Clock()
 
         game = Game(screen)
 
@@ -50,11 +50,12 @@ def training():
                     running = False
 
             running = running and game.IA_move(IA)
-            game.draw(True)
+            game.draw(i, IA.steps)
 
             pygame.display.flip()
             clock.tick(FPS)
-        pygame.quit()
+    pygame.quit()
+    IA.save_to_path(IA_PATH)
 
 def main():
     training()
