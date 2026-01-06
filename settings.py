@@ -25,7 +25,7 @@ L_R, L_G, L_B = 0.299, 0.587, 0.114
 UL=170
 
 # IA settings
-layers_size = [W_CELLS*H_CELLS, 128, 64, 4]
+layers_size = [W_CELLS*H_CELLS + 7, 128, 64, 4]
 
 GAMMA = 0.99
 LR = 1e-3
@@ -36,7 +36,7 @@ EPSILON_MIN = 0.05
 EPSILON_DECAY = 0.9999
 TARGET_UPDATE = 2*BATCH_SIZE
 
-IA_PATH = "IA\\models\\IA1.pt"
+IA_PATH = "IA\\models\\IA2.pt"
 NORM = H_CELLS*W_CELLS+2
 
 # Training settings
@@ -47,6 +47,6 @@ WIN_REWARD = +100.0
 TIME_PENALTY = -0.1
 MERGE_SCALE = 1
 BONUS = 2
-STRUCT = 15
+STRUCT = 10
 CLIP_MIN = -100.0
 CLIP_MAX = 100.0

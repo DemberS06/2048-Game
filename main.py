@@ -32,6 +32,7 @@ def play():
 def training():
     IA = IA_DQN()
     IA.load_from_path(IA_PATH)
+    #IA.load_from_path_expand("IA\\models\\IA1.pt", 16)
 
     pygame.init()
     pygame.font.init()

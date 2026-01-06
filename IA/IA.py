@@ -56,6 +56,24 @@ class IA_DQN:
             os.makedirs(dirp, exist_ok=True)
         torch.save({"model_state": self.model.state_dict()}, path)
 
+    def load_from_path_expand(self, path: str, old_input_size: int):
+        data = torch.load(path, map_location=self.device)
+        old_state = data["model_state"]
+
+        new_state = self.model.state_dict()
+
+        for k in new_state:
+            if k not in old_state:
+                continue
+
+            if k == "0.weight":
+                new_state[k][:, :old_input_size] = old_state[k]
+            else:
+                new_state[k] = old_state[k]
+
+        self.model.load_state_dict(new_state)
+        self.target_model.load_state_dict(self.model.state_dict())
+
     def remember(self, item):
         self.Buff.append(item)
         if len(self.Buff) > BUFFER_SIZE:
@@ -71,9 +89,37 @@ class IA_DQN:
 
     def board_to_input(self, board) -> List[float]:
         input = []
+        max_val=0
+        empty_cells = 0
         for v in board.board:
             for u in v:
                 input.append(u/NORM)
+                if u>max_val: max_val=u
+                empty_cells+=(u==0)
+
+        corner = 0
+        if board.board[0][0]==max_val or board.board[-1][0]==max_val or board.board[0][-1]==max_val or board.board[-1][-1]==max_val: 
+            corner+=1
+            
+        input.append(max_val/NORM)
+        input.append(empty_cells/NORM)
+        input.append(corner*0.2)
+
+        for i in range(4):
+            nxt=Board()
+            nxt.equal(board)
+            match i:
+                case 0:
+                    nxt.move_u()
+                case 1:
+                    nxt.move_l()
+                case 2:
+                    nxt.move_d()
+                case 3:
+                    nxt.move_r()
+            ok = 1-nxt.is_equal(board)
+            input.append(ok*0.2)
+
         return input
 
     def query(self, board) -> int:
