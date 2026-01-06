@@ -4,17 +4,18 @@ import pygame
 
 from objects.board import Board
 from objects.match import Match
+from objects.statistics import Statistics
 from settings import BLACK, WHITE, IA_PATH, BORDER_LN, HEIGHT
 
 from IA.IA import IA_DQN
 
 class Game:
-    def __init__(self, screen):
+    def __init__(self, screen, st=Statistics()):
         self.screen = screen
 
         self.dir=[0, 0, 0, 0]
 
-        self.match=Match()
+        self.match=Match(st=st)
         self.b=Board()
 
     def handle_input(self):
@@ -56,7 +57,8 @@ class Game:
         font=pygame.font.SysFont("Arial", 48)
         txt=font.render("GAME: "+str(i+1)+"  MOVES: "+str(moves), True, BLACK)
         self.screen.blit(txt, (0,HEIGHT-BORDER_LN/2))
-        print("GAME: "+str(i+1)+"  MOVES: "+str(moves))
+        print("GAME: "+str(i+1)+"  TOT_MOV: "+str(moves))
+        self.match.st.draw(self.screen)
 
         
         

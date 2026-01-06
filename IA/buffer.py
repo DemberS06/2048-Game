@@ -7,3 +7,4 @@ class Buffer:
         self.mov = -1
         self.R = 0
         self.done = 0
+        self.invalid = 0

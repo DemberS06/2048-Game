@@ -1,5 +1,6 @@
 import pygame
 from objects.board import Board
+from objects.statistics import Statistics
 from IA.buffer import Buffer
 
 from settings import (
@@ -9,10 +10,11 @@ from settings import (
 )
 
 class Match:
-    def __init__(self):
+    def __init__(self, st = Statistics()):
         self.board=Board()
         self.score=0
         self.moves=0
+        self.st=st
     
     def move(self, d):
         nxt = Board()
@@ -67,7 +69,11 @@ class Match:
         
         if self.board.is_equal(nxt):
             buffer.R=INVALID_PENALTY
+            buffer.invalid=1
+            buffer.done=1
             IA.remember(buffer)
+            self.st.push(buffer, self.moves)
+
             return False
         
         self.score+=2**score
@@ -102,8 +108,10 @@ class Match:
         
         if buffer.R>CLIP_MAX: buffer.R=CLIP_MAX
         if buffer.R<CLIP_MIN: buffer.R=CLIP_MIN
-            
+
         IA.remember(buffer)
+        self.st.push(buffer, self.moves)
+
         return ok
 
     def draw(self, screen):

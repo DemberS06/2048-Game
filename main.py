@@ -5,6 +5,7 @@ from game import Game
 from settings import WIDTH, HEIGHT, FPS, IA_TRAINING, IA_PATH, TYPE
 
 from IA.IA import IA_DQN
+from objects.statistics import Statistics
 
 def play():
     pygame.init()
@@ -32,7 +33,9 @@ def play():
 def training():
     IA = IA_DQN()
     IA.load_from_path(IA_PATH)
-    #IA.load_from_path_expand("IA\\models\\IA1.pt", 16)
+    #IA.load_from_path_expand("IA\\models\\IA2.pt", 23)
+
+    st = Statistics()
 
     pygame.init()
     pygame.font.init()
@@ -42,7 +45,7 @@ def training():
     clock = pygame.time.Clock()
     for i in range(IA_TRAINING):
 
-        game = Game(screen)
+        game = Game(screen, st=st)
 
         running = True
         while running:

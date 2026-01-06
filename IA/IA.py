@@ -96,14 +96,12 @@ class IA_DQN:
                 input.append(u/NORM)
                 if u>max_val: max_val=u
                 empty_cells+=(u==0)
-
-        corner = 0
-        if board.board[0][0]==max_val or board.board[-1][0]==max_val or board.board[0][-1]==max_val or board.board[-1][-1]==max_val: 
-            corner+=1
             
+        # model 2
         input.append(max_val/NORM)
         input.append(empty_cells/NORM)
-        input.append(corner*0.2)
+
+        input.append((board.board[0][0]==max_val)*0.3)
 
         for i in range(4):
             nxt=Board()
@@ -119,6 +117,11 @@ class IA_DQN:
                     nxt.move_r()
             ok = 1-nxt.is_equal(board)
             input.append(ok*0.2)
+        
+        # model 3
+        input.append((board.board[0][-1]==max_val)*0.3)
+        input.append((board.board[-1][0]==max_val)*0.3)
+        input.append((board.board[-1][-1]==max_val)*0.3)
 
         return input
 
