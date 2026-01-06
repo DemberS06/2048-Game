@@ -43,17 +43,20 @@ class Board:
         score = 0
         
         for i in range(self.H):
+            y = -1
             for j in range(self.W):
-                x=j
+                x=self.W-j-1 
                 if self.board[i][x] == 0: continue
-                for k in range(self.W-j-1):
-                    y=j+k+1
-                    if self.board[i][y] == 0: continue
-                    if self.board[i][x] != self.board[i][y]: break
-                    score+=self.board[i][x]
-                    self.board[i][x]+=1
-                    self.board[i][y]=0
-                    break
+                if y == -1:
+                    y=x
+                    continue
+                if self.board[i][x] != self.board[i][y]: 
+                    y=x
+                    continue
+                
+                score+=self.board[i][x]
+                self.board[i][x]+=1
+                self.board[i][y]=0
 
         for i in range(self.H):
             for j in range(self.W):
@@ -72,17 +75,20 @@ class Board:
         score = 0
         
         for i in range(self.H):
+            y = -1
             for j in range(self.W):
-                x=self.W-j-1
+                x=j
                 if self.board[i][x] == 0: continue
-                for k in range(self.W-j-1):
-                    y=x-k-1
-                    if self.board[i][y] == 0: continue
-                    if self.board[i][x] != self.board[i][y]: break
-                    score+=self.board[i][x]
-                    self.board[i][x]+=1
-                    self.board[i][y]=0
-                    break
+                if y == -1:
+                    y=x
+                    continue
+                if self.board[i][x] != self.board[i][y]: 
+                    y=x
+                    continue
+                
+                score+=self.board[i][x]
+                self.board[i][x]+=1
+                self.board[i][y]=0
 
         for i in range(self.H):
             for j in range(self.W):
@@ -101,17 +107,20 @@ class Board:
         score = 0
         
         for i in range(self.W):
+            y = -1
             for j in range(self.H):
-                x=j
+                x=self.H-j-1 
                 if self.board[x][i] == 0: continue
-                for k in range(self.H-j-1):
-                    y=j+k+1
-                    if self.board[y][i] == 0: continue
-                    if self.board[x][i] != self.board[y][i]: break
-                    score+=self.board[x][i]
-                    self.board[x][i]+=1
-                    self.board[y][i]=0
-                    break
+                if y == -1:
+                    y=x
+                    continue
+                if self.board[x][i] != self.board[y][i]: 
+                    y=x
+                    continue
+                
+                score+=self.board[x][i]
+                self.board[x][i]+=1
+                self.board[y][i]=0
 
         for i in range(self.W):
             for j in range(self.H):
@@ -130,17 +139,20 @@ class Board:
         score = 0
         
         for i in range(self.W):
+            y = -1
             for j in range(self.H):
-                x=self.H-j-1
+                x=j
                 if self.board[x][i] == 0: continue
-                for k in range(self.H-j-1):
-                    y=x-k-1
-                    if self.board[y][i] == 0: continue
-                    if self.board[x][i] != self.board[y][i]: break
-                    score+=self.board[x][i]
-                    self.board[x][i]+=1
-                    self.board[y][i]=0
-                    break
+                if y == -1:
+                    y=x
+                    continue
+                if self.board[x][i] != self.board[y][i]: 
+                    y=x
+                    continue
+                
+                score+=self.board[x][i]
+                self.board[x][i]+=1
+                self.board[y][i]=0
 
         for i in range(self.W):
             for j in range(self.H):

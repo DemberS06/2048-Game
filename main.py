@@ -2,7 +2,7 @@
 import pygame
 
 from game import Game
-from settings import WIDTH, HEIGHT, FPS, IA_TRAINING, IA_PATH
+from settings import WIDTH, HEIGHT, FPS, IA_TRAINING, IA_PATH, TYPE
 
 from IA.IA import IA_DQN
 
@@ -59,8 +59,9 @@ def training():
     pygame.quit()
 
 def main():
-    training()
-    #play()
+    match TYPE:
+        case 0: training()
+        case 2: play()
     
     print("2048 ended succefull")
     
