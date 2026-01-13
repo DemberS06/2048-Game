@@ -2,7 +2,7 @@
 import pygame
 
 from IA.buffer import Buffer
-from settings import NORM, STATISTICS_SIZE, BLACK, DATA_LN
+from settings import NORM, STATISTICS_SIZE, BLACK, DATA_LN, BORDER_LN
 
 class Statistics:
     def __init__(self):
@@ -54,6 +54,9 @@ class Statistics:
             x=i+1
             txt=font.render(str(2**x)+" -> FT: "+str(self.first_time[x])+"  Fr: "+str(fr[x]), True, BLACK)
             screen.blit(txt, (0,17*x+DATA_LN))
+
+        txt=font.render("MOV_INV: "+str(invalid)+"  MOV_MEAN: "+str(moves), True, BLACK)
+        screen.blit(txt, (BORDER_LN,DATA_LN+17))
 
 
 
